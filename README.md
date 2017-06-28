@@ -74,6 +74,7 @@ Adding a parameter for result size to <code>getRandomUserData(completion:)</code
 <br>
 <br>
 </details>
+<br>
 
 Let's update the `getRandomUserData` method in `APIManager` to: 
 
@@ -91,7 +92,7 @@ Now were can adjust the base URL for the API to include the `results` query para
 	<br>
 		There's a property on <code>URL</code> that gets the current URL as a string.
 	<br><br>
-</details
+</details>
 <details>
 	<summary>Hint 2</summary>
 	<br>
@@ -104,21 +105,22 @@ Now were can adjust the base URL for the API to include the `results` query para
 		Alternatively, you can use `URL(string:relativeTo:)`
 	<br><br>
 </details>
+<br>
 
 We can access the `String` representation of a `URL` through its `.absoluteString` property. Using that base `String`, we can use string interpolation to append the query information:
 
 ```swift
 	func getRandomUserData(results: Int, completion: @escaping ((Data?)->Void)) {
 		let queryString = APIManager.randomAPIEndpoint.absoluteString + "?results=\(results)"
-        let queryURL = URL(string: queryString)!
-
-        let session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
-
-        // make sure you update your dataTask to use the new URL 
-        session.dataTask(with: queryURL) { (data: Data?, response: URLResponse?, error: Error?)
-        	// ...other code...
-        }
-    }
+		let queryURL = URL(string: queryString)!
+	
+		let session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
+		
+		// make sure you update your dataTask to use the new URL 
+		session.dataTask(with: queryURL) { (data: Data?, response: URLResponse?, error: Error?)
+			// ...other code...
+		}
+	}
 ```
 
 Update your function call in `UsersTableViewController` to now include the `results` parameter, and give it any value you'd like. Re-run your project and observe the difference. 
