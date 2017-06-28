@@ -1,0 +1,47 @@
+{
+    "results": [
+        {
+            "gender": "female",
+            "name": {
+                "title": "miss",
+                "first": "veronika",
+                "last": "esser"
+            },
+            "location": {
+                "street": "5879 fasanenweg",
+                "city": "münchen",
+                "state": "sachsen-anhalt",
+                "postcode": 73433
+            },
+            "email": "veronika.esser@example.com",
+            "login": {
+                "username": "silvergoose254",
+                "password": "italy",
+                "salt": "szAvOTj0",
+                "md5": "db623a4fd1cb89b779d3d597890d034b",
+                "sha1": "410f364466b6ea0aa9e7fb59633a952af1c2d3ae",
+                "sha256": "c105434d2be73b79296d0eb8d2bca17edee8d6d40a42fa7ca3750ebbbba9b8a6"
+            },
+            "dob": "1949-10-21 18:12:33",
+            "registered": "2005-11-03 14:36:05",
+            "phone": "0038-4304611",
+            "cell": "0177-4726824",
+            "id": {
+                "name": "",
+                "value": null
+            },
+            "picture": {
+                "large": "https://randomuser.me/api/portraits/women/8.jpg",
+                "medium": "https://randomuser.me/api/portraits/med/women/8.jpg",
+                "thumbnail": "https://randomuser.me/api/portraits/thumb/women/8.jpg"
+            },
+            "nat": "DE"
+        }
+    ],
+    "info": {
+        "seed": "75001af21ceb489a",
+        "results": 1,
+        "page": 1,
+        "version": "1.1"
+    }
+}
