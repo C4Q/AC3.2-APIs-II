@@ -30,7 +30,7 @@ class UsersTableViewController: UITableViewController {
     }
     
     func loadUsers() {
-        APIManager.shared.getRandomUserData { (data: Data?) in
+        APIManager.shared.getRandomUserData(results: 10, gender: UserGenderTyped.male, nationality: UserNationalityTyped.tr ) { (data: Data?) in
             if data != nil {
                 
                 do {

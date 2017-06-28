@@ -10,12 +10,12 @@
 4. [The Rubber Duck Story - Youtube](https://www.youtube.com/watch?v=huOPVqztPdc)
 5. [Using Storyboards and Swift to Build Dynamic Tableviews](http://www.techotopia.com/index.php/Using_Storyboards_and_Swift_to_Build_Dynamic_TableViews_with_Prototype_Table_View_Cells)
 6. [NSUserDefaults - Coding Explorer](http://www.codingexplorer.com/nsuserdefaults-a-swift-introduction/)
-  - Note: Read this if you have time, but we may not get to it
+	- Note: Read this if you have time, but we may not get to it
 
 ### References:
 1. [Random User API Doc](https://randomuser.me/documentation)
 1. [HTTP Header Fields - tutorialspoint](https://www.tutorialspoint.com/http/http_header_fields.htm)
-  - Note: this is to have for reference, there's much more info here than you need right now
+	- Note: this is to have for reference, there's much more info here than you need right now
 2. [HTTP Status Codes - REST API Tutorial](http://www.restapitutorial.com/httpstatuscodes.html)
 3. [HTTP Methods for RESTful Services - REST API Tutorial](http://www.restapitutorial.com/lessons/httpmethods.html)
 4. [What is REST? - REST API Tutorial](http://www.restapitutorial.com/lessons/whatisrest.html)
@@ -30,6 +30,9 @@
 ### Objectives
 
 >> TODO
+
+- Understanding query parameters and how they affect the data returned from an API.
+- Building functions to send variable parameters
 
 ---
 ### 1. Request Parameters
@@ -117,7 +120,7 @@ We can access the `String` representation of a `URL` through its `.absoluteStrin
 ```
 Update your function call in `UsersTableViewController` to now include the `results` parameter, and give it any value you'd like. Re-run your project and observe the difference. 
 
-#### Try it out:
+### 3. Exercises:
 
 Referring to the [documentation for the RandomUser API](https://randomuser.me/documentation), you can see there are a number of query parameters you can include, for example:  
 
@@ -140,6 +143,9 @@ Referring to the [documentation for the RandomUser API](https://randomuser.me/do
 	}
 	```
 	- Do this with nationality by creating a separate enum, `UserNationality`. To keep things simple, limit your cases to `us`, `tr` and `nl`. *(I chose these 3 specifically because the results will be very distinct and easily identifiable)*
+
+#### Advanced Resource:
+1. [Enumerations - Apple Docs](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html)
 
 ---
 ### 2. 
