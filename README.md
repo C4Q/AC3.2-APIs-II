@@ -1,4 +1,62 @@
 # AC3.2-APIs-II
+### Detailing, Managing and Storing Requests
+
+---
+### Readings:
+
+1. [HTTP Methods - tutorialspoint](https://www.tutorialspoint.com/http/http_methods.htm)
+2. [What is the difference between POST and GET? - Stackoverflow](http://stackoverflow.com/questions/3477333/what-is-the-difference-between-post-and-get)
+3. [Understanding HTTP Basics - OneMonth](http://learn.onemonth.com/understanding-http-basics)
+4. [The Rubber Duck Story - Youtube](https://www.youtube.com/watch?v=huOPVqztPdc)
+5. [Using Storyboards and Swift to Build Dynamic Tableviews](http://www.techotopia.com/index.php/Using_Storyboards_and_Swift_to_Build_Dynamic_TableViews_with_Prototype_Table_View_Cells)
+6. [NSUserDefaults - Coding Explorer](http://www.codingexplorer.com/nsuserdefaults-a-swift-introduction/)
+  - Note: Read this if you have time, but we may not get to it
+
+### References:
+1. [Random User API Doc](https://randomuser.me/documentation)
+1. [HTTP Header Fields - tutorialspoint](https://www.tutorialspoint.com/http/http_header_fields.htm)
+  - Note: this is to have for reference, there's much more info here than you need right now
+2. [HTTP Status Codes - REST API Tutorial](http://www.restapitutorial.com/httpstatuscodes.html)
+3. [HTTP Methods for RESTful Services - REST API Tutorial](http://www.restapitutorial.com/lessons/httpmethods.html)
+4. [What is REST? - REST API Tutorial](http://www.restapitutorial.com/lessons/whatisrest.html)
+5. [Rubber Duck Debugging - Wiki](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
+
+### Definitions:
+
+1. **HTTP Parameters**: Parameters specify the variable parts of your resources: the data that you are working with. There are several types of parameters including HTTP Headers and Query Parameters. [SOAPUI](https://www.soapui.org/testing-dojo/best-practices/understanding-rest-headers-and-parameters.html)
+1. **Query Paramters**: The query parameters are separated from the hierarchical parameters by the question mark. The exact syntax of the actual parameters is not generically defined, but normally are a sequence of key-value pairs (separated by an equal sign) [SOAPUI](https://www.soapui.org/testing-dojo/best-practices/understanding-rest-headers-and-parameters.html)
+
+---
+### Objectives
+
+>> TODO
+
+---
+### 1. Request Parameters
+
+
+
+We've already taken a look at how to refine the data that gets returned from an API: the RandomUserAPI allows for parameters to be passed in with the `URL` to determine the information that is sent in a response. For example, we can limit the number of returned results by tacking on the key `results` with an integer as the value. Looking at the RandomUserAPI documentation, we can see there are a number of these parameter keys we can use to craft the response data as we need to:
+
+|`Key`|Purpose|Example|
+|---|---|---|
+|`results`| Determines the number of users that are returned | https://randomuser.me/api/?results=10 |
+|`gender`| Determines if male and/or female users should be returned | https://randomuser.me/api/?gender=female |
+|`nat`| Determines which nationalities should be returned | https://randomuser.me/api/?nat=US,BR,GB |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 >>>> TODO
 1. Remove part 2 files to this repo
@@ -29,6 +87,11 @@
 Note: The exercises outlined in [ExercisesREADME](https://github.com/C4Q/AC3.2-APIs/blob/master/Part%20II/ExercisesREADME.md) are not all covered, even in the "Full Solution" link. 
 
 >>> This should be the next lesson:
+
+
+
+
+
 
 1. how to build request
 2. Exercise on building request functions

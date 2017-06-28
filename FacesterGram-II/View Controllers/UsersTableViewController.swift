@@ -58,7 +58,6 @@ class UsersTableViewController: UITableViewController {
     
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -67,7 +66,6 @@ class UsersTableViewController: UITableViewController {
         return self.users.count
     }
 
-  
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UsersTableViewController.UserTableViewCellIdentifier, for: indexPath)
 

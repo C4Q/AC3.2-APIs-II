@@ -39,7 +39,9 @@ internal struct User {
         
         self.init(firstName: first, lastName: last, username: username, emailAddress: email, thumbnailURL: thumbnail)
     }
-    
+  
+  
+    // MARK: Failable Init - Advanced
     init?(failableJSON json: [String : AnyObject]) {
         // parse out name
         guard
