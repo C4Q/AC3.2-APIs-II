@@ -1,5 +1,5 @@
 # AC3.2-APIs-II
-### Detailing, Managing and Storing Requests
+### Detailing and Managing Requests
 
 ---
 ### Readings:
@@ -29,8 +29,6 @@
 ---
 ### Objectives
 
->> TODO
-
 - Understanding query parameters and how they affect the data returned from an API.
 - Building functions to send variable parameters
 
@@ -46,17 +44,17 @@ Fortunately the Random User API, like nearly all other API's, allow you to speci
 We're going to start testing parameters using Postman since it's far easier to debug the actualy request. When we're confident the request is correct, we can write the code for it.
 So in Postman, make sure that the base URL for API is entered into the address bar:
 
-> Image
+![Entering API URL into the address bar](./Images/postman_basic.png)
 
 To the immediate right of the bar should be a button that reads "Params", click on that an you should see additional text fields appear below the address bar. These extra fields correspond to the request's (optional) query parameters. Query parameters are simply key/value pairs that are interpreted by the API in order to modify it's response. In this case, we're telling the API to send back 10 users rather than the default 1. Notice how the URL changes when you add these parameters:
 
-> Image
+![Adding a query param](./Images/postman_results_param.png)
 
 You got some additional information appended to the end of the URL. Query parameters have a designated syntax of key/value pairs separated by `&` and immediately following a `?` in a URL. You'll also sometimes see parameters with keys that take multiple values, usually separated by a comma. 
 
 Send the request and observe the returned `JSON`. You can verify your request's results by looking at the `JSON`'s `info` key:
 
-> Image
+![Response JSON with Adjusted Results Param](./Images/postman_results_response.png)
 
 #### Adding Query Parameters in Code
 
@@ -93,10 +91,14 @@ Now were can adjust the base URL for the API to include the `results` query para
 	<br>
 		There's a property on <code>URL</code> that gets the current URL as a string.
 	<br><br>
+</details
+<details>
 	<summary>Hint 2</summary>
 	<br>
 		You can use string interpolation
 	<br><br>
+</details>
+<details>
 	<summary>Hint 3</summary>
 	<br>
 		Alternatively, you can use `URL(string:relativeTo:)`
@@ -114,13 +116,17 @@ We can access the `String` representation of a `URL` through its `.absoluteStrin
 
         // make sure you update your dataTask to use the new URL 
         session.dataTask(with: queryURL) { (data: Data?, response: URLResponse?, error: Error?)
-        	// other code
+        	// ...other code...
         }
     }
 ```
+
 Update your function call in `UsersTableViewController` to now include the `results` parameter, and give it any value you'd like. Re-run your project and observe the difference. 
 
+
 ### 3. Exercises:
+
+> *Remember to use Postman to test your requests first*
 
 Referring to the [documentation for the RandomUser API](https://randomuser.me/documentation), you can see there are a number of query parameters you can include, for example:  
 
@@ -135,143 +141,20 @@ Referring to the [documentation for the RandomUser API](https://randomuser.me/do
 	- *Note*: The parameter accepts two values, `male` and `female`. But can be omitted entirely if you want to receive results that are both male and female. 
 2. Update `APIManager.getRandomUserData` once more to have an additional parameter, `nationality: String`. 
 	- *Note*: This parameter can accept a comma-separated list of values corresponding to the nationalities of the users the API should return. First start with a single value, but after verifying that it works, make sure you can pass in multiple values for the `nat` key.
-3. Advanced: 
-	- If you find youself with a bit of time left over, adjust the `gender` parameter to be of type `UserGender`, which you will define as an enum: 
+3. Now, adjust the `gender` parameter to be of type `UserGender`, which you will define as an enum: 
 	```swift
 	enum UserGender{
 		case male, female, both
 	}
 	```
-	- Do this with nationality by creating a separate enum, `UserNationality`. To keep things simple, limit your cases to `us`, `tr` and `nl`. *(I chose these 3 specifically because the results will be very distinct and easily identifiable)*
+	- Do this with nationality as well, using an enum named `UserNationality`. To keep things simple, limit your cases to `us`, `tr` and `nl`. *(I chose these 3 specifically because the results will be very distinct and easily identifiable)*
+4. **Advanced**: Give your enums an associated type of `String`. (*notice how much code you save in doing this small change*)
+5. **Advanced**: Using default parameter values, find a way to condense **all** of our `APIManager.getRandomUserData` functions into a single function that can do all of the same work. 
 
-#### Advanced Resource:
+#### Advanced Resources:
 1. [Enumerations - Apple Docs](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html)
-
----
-### 2. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-We've already taken a look at how to refine the data that gets returned from an API: the RandomUserAPI allows for parameters to be passed in with the `URL` to determine the information that is sent in a response. For example, we can limit the number of returned results by tacking on the key `results` with an integer as the value. Looking at the RandomUserAPI documentation, we can see there are a number of these parameter keys we can use to craft the response data as we need to:
-
-|`Key`|Purpose|Example|
-|---|---|---|
-|`results`| Determines the number of users that are returned | https://randomuser.me/api/?results=10 |
-|`gender`| Determines if male and/or female users should be returned | https://randomuser.me/api/?gender=female |
-|`nat`| Determines which nationalities should be returned | https://randomuser.me/api/?nat=US,BR,GB |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>> TODO
-1. Remove part 2 files to this repo
-2. after saving the sample solutions, delete branches from part 1
-
-
----
-### Solutions Table of Contents:
-
-> Todo: Only part 1
-
-1. Part 1
-  1. [Exercise Problem #1](https://github.com/C4Q/AC3.2-APIs/commit/eac9a12b045b9d8e429bea2455d8f464dc6df856)
-  2. [Exercise Problem #2](https://github.com/C4Q/AC3.2-APIs/commit/95d7ff70877ecfae063ca54535e3f4e44366be02)
-  3. [Exercise Problem #3](https://github.com/C4Q/AC3.2-APIs/commit/360b01f2c471790af8e9785abb0afa755e0ccbb3)
-  4. [Advanced Solution](https://github.com/C4Q/AC3.2-APIs/commit/50ea9acef5f4b02a99a9adc12f079b36570d08b5)
-  5. [Expert Solution](https://github.com/C4Q/AC3.2-APIs/commit/031933e726c840aeab8682ce46edcff09382997b)
-
-
-2. Part 2
-  1. [Start of Project](https://github.com/C4Q/AC3.2-APIs/tree/2_part_II_setup)
-  2. [Full Solutions (Part 1 & 2)](https://github.com/C4Q/AC3.2-APIs/tree/2_full-solutions)
-  3. Answers to [ExercisesREADME](https://github.com/C4Q/AC3.2-APIs/blob/master/Part%20II/ExercisesREADME.md) exercises (TBD)
-3. Part 3
-  1. [Final code for lesson](https://github.com/C4Q/AC3.2-APIs/tree/3_userDefaults)
-  2. Answers for exerices (TBD)
-
-Note: The exercises outlined in [ExercisesREADME](https://github.com/C4Q/AC3.2-APIs/blob/master/Part%20II/ExercisesREADME.md) are not all covered, even in the "Full Solution" link. 
-
->>> This should be the next lesson:
-
-
-
-
-
-
-1. how to build request
-2. Exercise on building request functions
-3. Exercise on re-writing to use default parameters
-4. Advanced on next section is for the URL factory method
-
-#### Handling Errors
-As you parse out the `Any` object into arrays and dictionaries, I would recommend adding `print` statements along the way to see where something is working or failing
-
----
-### Exercises
-
-#### 1. More Requests
-Create three more functions for our `APIManager`:
-
-1. `func getRandom(users: Int, completion: ((Data?)->Void) )`
-2. `func getRandom(users: Int, gender: UserGender, completion: ((Data?)->Void) )`
-3. `func getRandom(users: Int, nationality: UserNationality, completion: ((Data?)->Void) )`
-
-For each of these, the `users` parameter will be an `Int` that will change the number of results returned on an API call. `UserGender` and `UserNationality` should be two `enum` that correspond to the possible options as listed in the RandomUserAPI documentation (including a "no-preference" option). 
-
-<details><summary>Code Hints</summary>
-
-<ol>
-<li> Your enums will look like this: <code>enum UserGender: String { ... }</code> and <code>enum UserNationality: String { ... }</code>
-<li> Constructing URL's is more easily done by starting off with a <code>String</code> and then later using <code>URL(string:)</code> when the string is ready.
-<li>Pay attention to the documentation on making requests with parameter. 
-</ol>
-
-</details>
-
-__Advanced__
-
-Using default parameter values, find a way to condense **all** of the four functions we now have in `APIManager` into just one.
-
-#### Resources for Advanced: 
-
+	- All of it is worth reading, but the section labeled **"Raw Values"** is specific to this problem
 1. [Why You should love default parameter values - Natasha the Robot](https://www.natashatherobot.com/swift-default-parameter-values/)
 2. [Parameter Defaults and Optional Function Parameters](https://craiggrummitt.com/2016/06/29/parameter-defaults-and-optional-function-parameters-in-swift-3-0/)
 
-__Expert__
 
-Create a separate "factory" class to generate the appropriate `URL` given the different possible parameters of `users`, `nationality` and `gender`. Call this factory `RandomUserURLFactory` with a singleton called `manager`. This factory class is intended to be used by the `APIManager`.
-
-`RandomUserURLFactory` will have one function: `func endpoint(users: Int, nationality: [UserNationality], gender: UserGender) -> URL`. From those parameters, build an appropriate URL to make a request. There are no particular rules on how you should go about doing this, so feel free to explore code. Just be sure to use Postman to test URLs and make sure you have an understanding of the format of the parameters.
-
-Examples:
-
-| | |
-|---|---|
-|Input|`RandomUserURLFactory.manager.endpoint(users: 10, nationality: [.GB], gender: .male)`|
-|Output| `https://randomuser.me/api/?results=10&nat=GB&gender=male` |
-
-| | |
-|---|---|
-|Input| `RandomUserURLFactory.manager.endpoint(users: 2, nationality: [.AU,.BR,.GB], gender: .noPreference)` |
-|Output| `https://randomuser.me/api/?results=2&nat=AU,BR,GB&gender=` |
