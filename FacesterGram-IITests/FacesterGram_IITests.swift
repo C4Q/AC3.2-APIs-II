@@ -21,16 +21,62 @@ class FacesterGram_IITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func test_UserGender_Enum_Values() {
+        XCTAssertNotNil(UserGender.both)
+        XCTAssertNotNil(UserGender.male)
+        XCTAssertNotNil(UserGender.female)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func test_UserNationality_Enum_Values() {
+        XCTAssertNotNil(UserNationality.any)
+        XCTAssertNotNil(UserNationality.nl)
+        XCTAssertNotNil(UserNationality.tr)
+        XCTAssertNotNil(UserNationality.us)
+    }
+    
+    func test_Password_Generation_Length() {
+        let expectation = XCTestExpectation(description: "Password should be between 8-16 chars")
+        
+        APIManager.shared.generatePassword { (password: String?) in
+            if password != nil {
+                if password!.characters.count <= 16 && password!.characters.count >= 8 {
+                    expectation.fulfill()
+                }
+            }
+        }
+        
+        let waiter = XCTWaiter()
+        waiter.delegate = self
+        waiter.wait(for: [expectation], timeout: 10)
+    }
+    
+    func test_Password_Generation_Content() {
+        let expectation = XCTestExpectation(description: "Password should contain at least 1 upper, lower, number and special")
+        
+        APIManager.shared.generatePassword { (password: String?) in
+            if password != nil {
+
+                let hasUpper = (password!.rangeOfCharacter(from: CharacterSet.uppercaseLetters)) != nil
+                let hasNumber = (password!.rangeOfCharacter(from: CharacterSet.decimalDigits)) != nil
+                let hasLower = (password!.rangeOfCharacter(from: CharacterSet.lowercaseLetters)) != nil
+                let hasSpecial = (password!.rangeOfCharacter(from: CharacterSet.symbols)) != nil
+                
+                if hasUpper && hasLower && hasNumber && hasSpecial {
+                    expectation.fulfill()
+                }
+                
+            }
+        }
+        
+        let waiter = XCTWaiter()
+        waiter.delegate = self
+        waiter.wait(for: [expectation], timeout: 10)
+    }
+    
+    override func waiter(_ waiter: XCTWaiter, didTimeoutWithUnfulfilledExpectations unfulfilledExpectations: [XCTestExpectation]) {
+        
+        for expectation in unfulfilledExpectations {
+            XCTFail("Could not fulfill expectation: \(expectation.description)")
         }
     }
-    
 }

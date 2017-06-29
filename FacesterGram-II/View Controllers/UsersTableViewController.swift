@@ -59,18 +59,6 @@ class UsersTableViewController: UITableViewController {
     // MARK: - Password Generator
     
     @IBAction func didPressPassword(_ sender: UIBarButtonItem) {
-        print("Did press")
-        
-        APIManager.shared.generatePassword(options: [.lower,.number], minLength: 8, maxLength: 16) { (password: String?) in
-            if password != nil {
-                let alert = UIAlertController(title: "Password", message: "\(password!)", preferredStyle: .actionSheet)
-                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(action)
-                
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
-        
         APIManager.shared.generatePassword { (password: String?) in
             if password != nil {
                 

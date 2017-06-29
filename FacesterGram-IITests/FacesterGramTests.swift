@@ -7,14 +7,14 @@
 //
 
 import XCTest
-@testable import FacesterGram
+@testable import FacesterGram_II
 
 class FacesterGramTests: XCTestCase {
     private let apiManagerDataRequestDescription = "Data should be returned from APIManager"
     private let apiManagerDataValidityRequestDescription = "Data returned from APIManager should be able to be converted into User"
     
     private var validUserJSON: [String : AnyObject] = {
-        let bundle = Bundle(identifier: "nyc.AccessCode.FacesterGramTests")!
+        let bundle = Bundle(identifier: "nyc.accesscode.FacesterGram-IITests")!
         let resource = bundle.url(forResource: "randomUserTesting", withExtension: "json")!
         let data = try! Data(contentsOf: resource)
         let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
@@ -23,7 +23,7 @@ class FacesterGramTests: XCTestCase {
     }()
     
     private var invalidUserJSON: [String : AnyObject] = {
-        let bundle = Bundle(identifier: "nyc.AccessCode.FacesterGramTests")!
+        let bundle = Bundle(identifier: "nyc.accesscode.FacesterGram-IITests")!
         let resource = bundle.url(forResource: "randomUserTesting_invalid", withExtension: "json")!
         let data = try! Data(contentsOf: resource)
         let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
@@ -68,7 +68,7 @@ class FacesterGramTests: XCTestCase {
     // MARK - APIManager Tests
     func test_APIManager_Should_Make_Requests() {
         let expectation = XCTestExpectation(description: apiManagerDataRequestDescription)
-        APIManager.shared.getRandomUserData { (data: Data?) in
+        APIManager.shared.getRandomUserData(results: 1, gender: "male", nationality: "us") { (data: Data?) in
             if data != nil {
                 expectation.fulfill()
             }
@@ -83,7 +83,7 @@ class FacesterGramTests: XCTestCase {
         
         let expectation = XCTestExpectation(description: apiManagerDataValidityRequestDescription)
         var users: [User] = []
-        APIManager.shared.getRandomUserData { (data: Data?) in
+        APIManager.shared.getRandomUserData(results: 5, gender: "male", nationality: "us") { (data: Data?) in
             if data != nil {
                 
                 do {
@@ -93,7 +93,7 @@ class FacesterGramTests: XCTestCase {
                         users.append(User(json: result))
                     }
                     
-                    if users.count > 0 {
+                    if users.count == 5 {
                         expectation.fulfill()
                     }
                 }
