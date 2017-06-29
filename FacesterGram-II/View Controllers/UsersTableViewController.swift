@@ -30,7 +30,7 @@ class UsersTableViewController: UITableViewController {
     }
     
     func loadUsers() {
-        APIManager.shared.getRandomUserData(results: 10, gender: UserGenderTyped.male, nationality: UserNationalityTyped.tr ) { (data: Data?) in
+        APIManager.shared.getRandomUserData { (data: Data?) in
             if data != nil {
                 
                 do {
@@ -56,21 +56,6 @@ class UsersTableViewController: UITableViewController {
         }
     }
     
-    // MARK: - Password Generator
-    
-    @IBAction func didPressPassword(_ sender: UIBarButtonItem) {
-        APIManager.shared.generatePassword { (password: String?) in
-            if password != nil {
-                
-                let alert = UIAlertController(title: "Password", message: "\(password!)", preferredStyle: .actionSheet)
-                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(action)
-                
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
-    }
-
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1

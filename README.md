@@ -102,7 +102,7 @@ Now were can adjust the base URL for the API to include the `results` query para
 <details>
 	<summary>Hint 3</summary>
 	<br>
-		Alternatively, you can use `URL(string:relativeTo:)`
+		Alternatively, you can use <code>URL(string:relativeTo:)</code>
 	<br><br>
 </details>
 <br>
