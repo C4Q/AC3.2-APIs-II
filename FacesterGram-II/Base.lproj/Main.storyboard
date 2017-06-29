@@ -32,8 +32,15 @@
                             <outlet property="delegate" destination="iJ2-BB-OoD" id="ieT-ch-4bj"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="iFacesterGram" id="AQP-Ue-zWW"/>
+                    <navigationItem key="navigationItem" title="iFacesterGram" id="AQP-Ue-zWW">
+                        <barButtonItem key="rightBarButtonItem" image="lock_icon" id="hUq-xO-u4N">
+                            <connections>
+                                <action selector="didPressPassword:" destination="iJ2-BB-OoD" id="gJY-Zy-0A8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Wqf-wU-Oda">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                 </tableViewController>
@@ -60,4 +67,7 @@
             <point key="canvasLocation" x="-144.80000000000001" y="228.93553223388307"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="lock_icon" width="22" height="22"/>
+    </resources>
 </document>

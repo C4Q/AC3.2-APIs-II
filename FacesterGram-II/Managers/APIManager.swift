@@ -26,6 +26,10 @@ enum UserNationalityTyped: String {
     case any = ""
 }
 
+enum UserPassOptions: String {
+    case upper, lower, number, special
+}
+
 class APIManager {
     private static let randomAPIEndpoint: URL = URL(string: "https://api.randomuser.me")!
     
@@ -77,5 +81,86 @@ class APIManager {
     func getRandomUserData(results: Int, gender: UserGenderTyped, nationality: UserNationalityTyped, completion: @escaping ((Data?)->Void)) {
         print("Gender, Nationality: ", gender.rawValue, nationality.rawValue)
         getRandomUserData(results: results, gender: gender.rawValue, nationality: nationality.rawValue, completion: completion)
+    }
+    
+    func generatePassword(completion: @escaping (String?) -> Void) {
+        let queryString = "?password=upper,lower,number,special,8-16&" +
+                          "inc=login"
+        let queryURL = URL(string: queryString, relativeTo: APIManager.randomAPIEndpoint)!
+        
+        let session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
+        session.dataTask(with: queryURL) { (data: Data?, response: URLResponse?, error: Error?) in
+            if error != nil {
+                print("Error encountered in API request: \(String(describing: error?.localizedDescription))")
+            }
+            
+            if data != nil {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: []) as! [String:AnyObject]
+                    
+                    if let resultsJSON = json["results"] as? [[String : AnyObject]] {
+                        for results in resultsJSON {
+                            guard
+                                let loginJSON = results["login"] as? [String: String],
+                                let passwordString = loginJSON["password"]
+                            else {
+                                    completion(nil)
+                                    return
+                            }
+                            
+                            completion(passwordString)
+                        }
+                    }
+                }
+                catch {
+                    print("Error Occurred: \(error.localizedDescription)")
+                }
+
+            }
+            
+            }.resume()
+
+    }
+    
+    func generatePassword(options: [UserPassOptions], minLength: Int, maxLength: Int, completion: @escaping (String?) -> Void) {
+        var passwordOptions = "?password="
+        for option in options {
+            passwordOptions.append(option.rawValue + ",")
+        }
+        passwordOptions += "\(minLength)-\(maxLength)"
+        
+        let queryURL = URL(string: passwordOptions, relativeTo: APIManager.randomAPIEndpoint)!
+        
+        let session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
+        session.dataTask(with: queryURL) { (data: Data?, response: URLResponse?, error: Error?) in
+            if error != nil {
+                print("Error encountered in API request: \(String(describing: error?.localizedDescription))")
+            }
+            
+            if data != nil {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: []) as! [String:AnyObject]
+                    
+                    if let resultsJSON = json["results"] as? [[String : AnyObject]] {
+                        for results in resultsJSON {
+                            guard
+                                let loginJSON = results["login"] as? [String: String],
+                                let passwordString = loginJSON["password"]
+                                else {
+                                    completion(nil)
+                                    return
+                            }
+                            
+                            completion(passwordString)
+                        }
+                    }
+                }
+                catch {
+                    print("Error Occurred: \(error.localizedDescription)")
+                }
+                
+            }
+            
+            }.resume()
     }
 }

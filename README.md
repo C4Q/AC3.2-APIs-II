@@ -126,7 +126,7 @@ We can access the `String` representation of a `URL` through its `.absoluteStrin
 Update your function call in `UsersTableViewController` to now include the `results` parameter, and give it any value you'd like. Re-run your project and observe the difference. 
 
 
-### 3. Exercises:
+### 3. Exercise Set I: More Requests
 
 > *Remember to use Postman to test your requests first*
 
@@ -159,4 +159,49 @@ Referring to the [documentation for the RandomUser API](https://randomuser.me/do
 1. [Why You should love default parameter values - Natasha the Robot](https://www.natashatherobot.com/swift-default-parameter-values/)
 2. [Parameter Defaults and Optional Function Parameters](https://craiggrummitt.com/2016/06/29/parameter-defaults-and-optional-function-parameters-in-swift-3-0/)
 
+---
+### Exercise Set II: Password Generator
 
+A major problem in cyber security is getting users to use strong passwords when they create an account for an online service. It's usually recommended that passwords contain at least one uppercase, lowercase, number and special character. Additionally, it is recommended that passwords are between 8-16 characters long. But this isn't an easy task for users to do, so we're going to make something to help them out: a secure password generator. 
+
+The Random User API has an option to specify the details of a password generated for a user by way of it's `password` query parameter. Your task is the following: 
+
+1. Add a `UIBarButtonItem` to the navigation controller
+	- This item should use the `lock_icon` image included with the project
+2. Add an `IBAction` for the bar item called `didPressPassword` and link it to the `UsersTableViewController`
+3. Add a new function to `APIManager`: `generatePassword(completion: @escaping (String?) -> Void)`
+	- The `String?` in the `escaping` closure should correspond to the `password` generated
+	- The password must include `uppercase, lowercase, special` and be between `8-16` characters
+	- We're *only* interested in the login information, so see if there is a way to exclude anything we don't need (hint: use the `inc` query parameter)
+4. Call `generatePassword` from the `IBAction` created in step 2
+5. In the completion closure of `generatePassword`, add in this code to have it displayed to the user:
+	```swift
+		let alert = UIAlertController(title: "Password", message: "\(password!)", preferredStyle: .actionSheet)
+		let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+		alert.addAction(action)
+
+		self.present(alert, animated: true, completion: nil)
+	```
+
+![Nav Bar with Lock Icon](./Images/nav_with_lock_icon.png)
+![Alert displaying the password](./Images/display_generated_password.png)
+
+#### *Advanced*
+
+If you find yourself with some extra time, go ahead and update `generatePassword` to look like:
+
+```swift
+	enum UserPassOptions: String {
+		case upper, lower, number, special
+	}
+
+	func generatePassword(options: [UserPassOptions], minLength: Int, maxLength: Int, completion: @escaping (String?) -> Void) {
+       // ... other code ... 
+    }
+```
+
+Test your code and verify you can adjust parameters and get a desired password output. 
+
+> Notes:
+1. `UserPassOptions` has an associated type of `String`.
+2. The RandomUser API ignores any key/values it doesn't understand. So just because you don't get an error, doesn't mean your parameters are actually being interpreted. 
