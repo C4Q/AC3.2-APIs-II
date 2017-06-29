@@ -95,3 +95,103 @@ func getRandomUserData(results: Int, gender: UserGenderTyped, nationality: UserN
     getRandomUserData(results: results, gender: gender.rawValue, nationality: nationality.rawValue, completion: completion)
 }
 ```
+
+### Execise Set 2
+
+```swift
+func generatePassword(completion: @escaping (String?) -> Void) {
+        let queryString = "?password=upper,lower,number,special,8-16&" +
+                          "inc=login"
+        let queryURL = URL(string: queryString, relativeTo: APIManager.randomAPIEndpoint)!
+        
+        let session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
+        session.dataTask(with: queryURL) { (data: Data?, response: URLResponse?, error: Error?) in
+            if error != nil {
+                print("Error encountered in API request: \(String(describing: error?.localizedDescription))")
+            }
+            
+            if data != nil {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: []) as! [String:AnyObject]
+                    
+                    if let resultsJSON = json["results"] as? [[String : AnyObject]] {
+                        for results in resultsJSON {
+                            guard
+                                let loginJSON = results["login"] as? [String: String],
+                                let passwordString = loginJSON["password"]
+                            else {
+                                    completion(nil)
+                                    return
+                            }
+                            
+                            completion(passwordString)
+                        }
+                    }
+                }
+                catch {
+                    print("Error Occurred: \(error.localizedDescription)")
+                }
+
+            }
+            
+            }.resume()
+
+    }
+```
+
+#### Advanced 
+```swift
+// In APIManager.swift
+func generatePassword(options: [UserPassOptions], minLength: Int, maxLength: Int, completion: @escaping (String?) -> Void) {
+        var passwordOptions = "?password="
+        for option in options {
+            passwordOptions.append(option.rawValue + ",")
+        }
+        passwordOptions += "\(minLength)-\(maxLength)"
+        
+        let queryURL = URL(string: passwordOptions, relativeTo: APIManager.randomAPIEndpoint)!
+        
+        let session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
+        session.dataTask(with: queryURL) { (data: Data?, response: URLResponse?, error: Error?) in
+            if error != nil {
+                print("Error encountered in API request: \(String(describing: error?.localizedDescription))")
+            }
+            
+            if data != nil {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: []) as! [String:AnyObject]
+                    
+                    if let resultsJSON = json["results"] as? [[String : AnyObject]] {
+                        for results in resultsJSON {
+                            guard
+                                let loginJSON = results["login"] as? [String: String],
+                                let passwordString = loginJSON["password"]
+                                else {
+                                    completion(nil)
+                                    return
+                            }
+                            
+                            completion(passwordString)
+                        }
+                    }
+                }
+                catch {
+                    print("Error Occurred: \(error.localizedDescription)")
+                }
+                
+            }
+            
+            }.resume()
+    }
+
+// In UserTableViewController
+        APIManager.shared.generatePassword(options: [.upper,.lower,.number.special], minLength: 8, maxLength: 16) { (password: String?) in
+            if password != nil {
+                let alert = UIAlertController(title: "Password", message: "\(password!)", preferredStyle: .actionSheet)
+                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(action)
+                
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+```
